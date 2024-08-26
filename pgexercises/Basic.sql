@@ -86,4 +86,22 @@ from cd.members m
 inner join cd.bookings b on m.memid=b.memid
 where concat(firstname,' ',surname)='David Farrell';
 
+--Work out the start times of bookings for tennis courts
+--How can you produce a list of the start times for bookings for tennis courts, for the date '2012-09-21'?
+-- Return a list of start time and facility name pairings, ordered by the time.
+select b.starttime,f.name
+from cd.bookings b
+inner join cd.facilities  f 
+on b.facid=f.facid
+where date(starttime)='2012-09-21' and Lower(name) like '%tennis court%'
+order by starttime
 
+--Produce a list of all members who have recommended another member
+--How can you output a list of all members who have recommended another member? Ensure that there are no duplicates in the list, 
+--and that results are ordered by (surname, firstname).
+
+select distinct mem.firstname,mem.surname
+from cd.members mem
+inner join cd.members rec
+on mem.memid=rec.recommendedby
+order by mem.surname,mem.firstname
