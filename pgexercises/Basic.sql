@@ -64,5 +64,26 @@ union
 select name as surname
 from cd.facilities;
 
+--Simple aggregation
+--You'd like to get the signup date of your last member. How can you retrieve this information?
+
+select max(joindate) from cd.members;
+
+--More aggregation
+--You'd like to get the first and last name of the last member(s) who signed up - not just the date. How can you do that?
+
+select firstname,surname,joindate from cd.members order by joindate desc limit 1;
+
+select firstname,surname,joindate from cd.members 
+where joindate=
+(select max(joindate) from cd.members);
+
+--Retrieve the start times of members' bookings
+--How can you produce a list of the start times for bookings by members named 'David Farrell'?
+
+select b.starttime
+from cd.members m
+inner join cd.bookings b on m.memid=b.memid
+where concat(firstname,' ',surname)='David Farrell';
 
 
